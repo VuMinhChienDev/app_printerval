@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.inamewar.myapp"
     },
     "web": {
       "bundler": "metro",
@@ -35,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "36f363de-7f0c-44f5-ac2c-9691910c778c"
+      }
+    },
+    "owner": "inamewar"
   }
 }
