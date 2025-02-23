@@ -3,12 +3,13 @@
 // "use client"
 
 // import { useState, useEffect, useCallback } from "react"
-// import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, SafeAreaView } from "react-native"
+// import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, SafeAreaView, Alert } from "react-native"
 // import { X } from "lucide-react-native"
 // import { router } from "expo-router"
 // import AsyncStorage from "@react-native-async-storage/async-storage"
 // import { useFocusEffect } from "@react-navigation/native"
 // import CustomHeader from '../../CustomHeader'
+
 // interface Product {
 //   id: number
 //   title: string
@@ -19,27 +20,38 @@
 
 // export default function WishlistScreen() {
 //   const [wishlistItems, setWishlistItems] = useState<Product[]>([])
+//   const [prevWishlistCount, setPrevWishlistCount] = useState<number>(0) // Theo dõi số lượng trước đó
 
 //   const loadWishlistItems = useCallback(async () => {
 //     try {
 //       const wishlist = await AsyncStorage.getItem("wishlist")
 //       if (wishlist) {
 //         const parsedWishlist = JSON.parse(wishlist)
-//         // Loại bỏ các sản phẩm trùng lặp dựa trên id
 //         const uniqueWishlist = parsedWishlist.filter(
 //           (item: Product, index: number, self: Product[]) =>
 //             index === self.findIndex((t) => t.id === item.id)
 //         )
 //         setWishlistItems(uniqueWishlist)
 //         console.log("Loaded unique wishlist items:", uniqueWishlist)
+
+//         // Kiểm tra nếu số lượng wishlist tăng lên, hiển thị thông báo
+//         if (uniqueWishlist.length > prevWishlistCount) {
+//           Alert.alert(
+//             "Wishlist Updated",
+//             `A new item has been added to your wishlist! Total items: ${uniqueWishlist.length}`,
+//             [{ text: "OK", onPress: () => console.log("Alert closed") }]
+//           )
+//         }
+//         setPrevWishlistCount(uniqueWishlist.length) // Cập nhật số lượng trước đó
 //       } else {
 //         console.log("Wishlist is empty")
 //         setWishlistItems([])
+//         setPrevWishlistCount(0)
 //       }
 //     } catch (error) {
 //       console.error("Error loading wishlist items:", error)
 //     }
-//   }, [])
+//   }, [prevWishlistCount])
 
 //   useEffect(() => {
 //     loadWishlistItems()
@@ -56,24 +68,24 @@
 //       const updatedWishlist = wishlistItems.filter((item) => item.id !== productId)
 //       await AsyncStorage.setItem("wishlist", JSON.stringify(updatedWishlist))
 //       setWishlistItems(updatedWishlist)
+//       setPrevWishlistCount(updatedWishlist.length) // Cập nhật lại số lượng
 //       console.log("Updated wishlist after removal:", updatedWishlist)
 //     } catch (error) {
 //       console.error("Error removing item from wishlist:", error)
 //     }
 //   }
 
-//   // Hàm để thêm sản phẩm vào wishlist (nếu bạn có màn hình khác gọi hàm này)
 //   const addToWishlist = async (product: Product) => {
 //     try {
 //       const wishlist = await AsyncStorage.getItem("wishlist")
 //       let currentWishlist: Product[] = wishlist ? JSON.parse(wishlist) : []
       
-//       // Kiểm tra xem sản phẩm đã tồn tại chưa
 //       const exists = currentWishlist.some((item) => item.id === product.id)
 //       if (!exists) {
 //         currentWishlist.push(product)
 //         await AsyncStorage.setItem("wishlist", JSON.stringify(currentWishlist))
 //         setWishlistItems(currentWishlist)
+//         setPrevWishlistCount(currentWishlist.length) // Cập nhật số lượng
 //         console.log("Added to wishlist:", currentWishlist)
 //       } else {
 //         console.log("Product already in wishlist")
@@ -86,7 +98,7 @@
 //   return (
 //     <SafeAreaView style={{ ...styles.scrollContainer, flexGrow: 1, paddingBottom: 100 }}>
 //       <View style={styles.header}>
-//         <CustomHeader/>
+//         <CustomHeader />
 //       </View>
 
 //       <ScrollView style={styles.productList}>
@@ -122,10 +134,7 @@
 //   )
 // }
 
-// // Styles giữ nguyên như code gốc
-
 // const styles = StyleSheet.create({
-  
 //   scrollContainer: {
 //     flex: 1,
 //     backgroundColor: "#fff",
@@ -141,9 +150,6 @@
 //     borderBottomWidth: 1,
 //     borderBottomColor: "#eee",
 //   },
- 
-
-
 //   productList: {
 //     padding: 16,
 //   },
@@ -220,8 +226,7 @@
 //     color: "#fff",
 //     fontWeight: "600",
 //   },
-// })
-
+// }) 
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
@@ -242,7 +247,7 @@ interface Product {
 
 export default function WishlistScreen() {
   const [wishlistItems, setWishlistItems] = useState<Product[]>([])
-  const [prevWishlistCount, setPrevWishlistCount] = useState<number>(0) // Theo dõi số lượng trước đó
+  const [prevWishlistCount, setPrevWishlistCount] = useState<number>(0)
 
   const loadWishlistItems = useCallback(async () => {
     try {
@@ -256,7 +261,6 @@ export default function WishlistScreen() {
         setWishlistItems(uniqueWishlist)
         console.log("Loaded unique wishlist items:", uniqueWishlist)
 
-        // Kiểm tra nếu số lượng wishlist tăng lên, hiển thị thông báo
         if (uniqueWishlist.length > prevWishlistCount) {
           Alert.alert(
             "Wishlist Updated",
@@ -264,7 +268,7 @@ export default function WishlistScreen() {
             [{ text: "OK", onPress: () => console.log("Alert closed") }]
           )
         }
-        setPrevWishlistCount(uniqueWishlist.length) // Cập nhật số lượng trước đó
+        setPrevWishlistCount(uniqueWishlist.length)
       } else {
         console.log("Wishlist is empty")
         setWishlistItems([])
@@ -290,30 +294,37 @@ export default function WishlistScreen() {
       const updatedWishlist = wishlistItems.filter((item) => item.id !== productId)
       await AsyncStorage.setItem("wishlist", JSON.stringify(updatedWishlist))
       setWishlistItems(updatedWishlist)
-      setPrevWishlistCount(updatedWishlist.length) // Cập nhật lại số lượng
+      setPrevWishlistCount(updatedWishlist.length)
       console.log("Updated wishlist after removal:", updatedWishlist)
     } catch (error) {
       console.error("Error removing item from wishlist:", error)
     }
   }
 
-  const addToWishlist = async (product: Product) => {
+  const addToCart = async (product: Product) => {
     try {
-      const wishlist = await AsyncStorage.getItem("wishlist")
-      let currentWishlist: Product[] = wishlist ? JSON.parse(wishlist) : []
-      
-      const exists = currentWishlist.some((item) => item.id === product.id)
+      // Lấy giỏ hàng hiện tại từ AsyncStorage
+      const cart = await AsyncStorage.getItem("cart")
+      let currentCart: Product[] = cart ? JSON.parse(cart) : []
+
+      // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+      const exists = currentCart.some((item) => item.id === product.id)
       if (!exists) {
-        currentWishlist.push(product)
-        await AsyncStorage.setItem("wishlist", JSON.stringify(currentWishlist))
-        setWishlistItems(currentWishlist)
-        setPrevWishlistCount(currentWishlist.length) // Cập nhật số lượng
-        console.log("Added to wishlist:", currentWishlist)
+        // Thêm sản phẩm vào giỏ hàng với quantity mặc định là 1
+        const productToAdd = { ...product, quantity: 1 }
+        currentCart.push(productToAdd)
+        await AsyncStorage.setItem("cart", JSON.stringify(currentCart))
+        console.log("Added to cart:", currentCart)
+
+        // Chuyển hướng sang CartScreen
+        router.push('/product-details/Cart/Cartscreen')
       } else {
-        console.log("Product already in wishlist")
+        console.log("Product already in cart")
+        // Nếu sản phẩm đã có trong giỏ hàng, vẫn chuyển hướng sang CartScreen
+        router.push('/product-details/Cart/Cartscreen')
       }
     } catch (error) {
-      console.error("Error adding to wishlist:", error)
+      console.error("Error adding to cart:", error)
     }
   }
 
@@ -344,7 +355,10 @@ export default function WishlistScreen() {
                     <Text style={styles.originalPrice}>${product.originalPrice.toFixed(2)}</Text>
                   )}
                 </View>
-                <TouchableOpacity style={styles.addToCartButton}>
+                <TouchableOpacity
+                  style={styles.addToCartButton}
+                  onPress={() => addToCart(product)} // Gọi hàm addToCart khi nhấn
+                >
                   <Text style={styles.addToCartButtonText}>+ Add to cart</Text>
                 </TouchableOpacity>
               </View>
@@ -358,10 +372,6 @@ export default function WishlistScreen() {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  container: {
     flex: 1,
     backgroundColor: "#fff",
   },
@@ -448,4 +458,4 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "600",
   },
-}) 
+})

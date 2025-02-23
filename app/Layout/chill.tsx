@@ -70,6 +70,7 @@ const Chill = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    
   },
   card: {
     width: ITEM_WIDTH,
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-    textAlign: 'center',
+ 
   },
   horizontalList: {
     paddingVertical: 10,
