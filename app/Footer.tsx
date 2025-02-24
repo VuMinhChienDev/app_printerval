@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Linking, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 
+
 export default function Footer() {
   const openLink = (url: string) => {
     Linking.openURL(url);
@@ -13,7 +14,7 @@ export default function Footer() {
       {/* Service Features */}
       <View style={styles.featuresContainer}>
         <View style={styles.featureItem}>
-          <Icon name="shipping-fast" size={24} color="#4A90E2" />
+        <Icon name="truck" size={24} color="#4A90E2" />
           <View>
             <Text style={styles.title}>Worldwide Shipping</Text>
             <Text style={styles.description}>Available as Standard or Express delivery</Text>
@@ -127,7 +128,7 @@ export default function Footer() {
 const styles = StyleSheet.create({
   footer: {
     backgroundColor: '#2B4259',
-    color: 'white',
+  
     paddingBottom: 20,
   },
   featuresContainer: {

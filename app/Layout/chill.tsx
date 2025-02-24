@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, StyleSheet, Dimensions } from 'react-native';
-import { products as productData } from '../Data'; 
+import { products as productData } from '../Data';
 
 // Định nghĩa interface cho sản phẩm
 interface Product {
@@ -18,6 +18,7 @@ const products: Product[] = productData;
 // Lấy chiều rộng màn hình để tính toán kích thước item
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = 150;
+const ITEM_HEIGHT = 250; // Thêm chiều cao cố định cho item để đồng đều
 const IMAGE_HEIGHT = 150;
 
 // Component hiển thị từng sản phẩm
@@ -29,7 +30,9 @@ const ProductItem = ({ item }: { item: Product }) => (
   >
     <Image source={{ uri: item.imageUrl }} style={styles.image} resizeMode="cover" />
     <View style={styles.infoContainer}>
-      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+        {item.title}
+      </Text>
       <View style={styles.priceContainer}>
         <Text style={styles.price}>${item.price.toFixed(2)}</Text>
         {item.originalPrice && (
@@ -54,12 +57,9 @@ const Chill = () => {
         data={products.slice(1, 10)} // Lấy sản phẩm từ index 1 đến 9
         keyExtractor={(item) => item.id.toString()}
         horizontal
-        renderItem={({ item }) => (
-          <View style={{ marginRight: 10 }}>
-            <ProductItem item={item} />
-          </View>
-        )}
-        showsHorizontalScrollIndicator={false} // Ẩn thanh cuộn ngang
+        renderItem={({ item }) => <ProductItem item={item} />}
+        ItemSeparatorComponent={() => <View style={{ width: 10 }} />} // Khoảng cách đều giữa các item
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.horizontalList}
       />
     </View>
@@ -70,23 +70,31 @@ const Chill = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    
   },
   card: {
     width: ITEM_WIDTH,
+    height: ITEM_HEIGHT, // Chiều cao cố định để đồng đều
     borderRadius: 10,
     overflow: 'hidden',
-    marginBottom: 10,
     alignItems: 'center',
+    backgroundColor: '#fff',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   image: {
-    width: '100%',
+    width: ITEM_WIDTH, // Đảm bảo ảnh khớp với chiều rộng card
     height: IMAGE_HEIGHT,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   infoContainer: {
+    flex: 1, // Để phần thông tin chiếm hết không gian còn lại
     padding: 10,
     alignItems: 'center',
+    justifyContent: 'space-between', // Căn đều nội dung trong infoContainer
   },
   title: {
     fontSize: 14,
@@ -98,7 +106,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
-    marginTop: 5,
   },
   price: {
     fontSize: 14,
@@ -116,11 +123,9 @@ const styles = StyleSheet.create({
   recentlyViewedText: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
- 
   },
   horizontalList: {
-    paddingVertical: 10,
+    paddingHorizontal: 0, // Loại bỏ padding thừa để căn đều
   },
 });
 

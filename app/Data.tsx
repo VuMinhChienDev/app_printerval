@@ -199,7 +199,7 @@ export interface Product {
      
       {
         id: 25,
-        title: "img 3",
+        title: "img 4",
         price: 22.95,
         originalPrice: 32.79,
         imageUrl: "https://cdn.printerval.com/unsafe/360x360/asset.prtvstatic.com/2023/06/25/5be86102-c0ac-4113-a404-07550d5d8ff3.png",
@@ -207,7 +207,7 @@ export interface Product {
       },
       {
         id: 26,
-        title: "img 3",
+        title: "img 5",
         price: 22.95,
         originalPrice: 32.79,
         imageUrl: " https://cdn.printerval.com/unsafe/360x360/asset.prtvstatic.com/2024/01/15/2ff3f96b-179d-4397-b7bd-016488e04dca.png",

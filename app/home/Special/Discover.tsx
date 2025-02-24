@@ -40,7 +40,7 @@ const ProductItem = ({ item }: { item: Product }) => (
 
 // Hàm ghép dữ liệu thành cặp (hàng trên và hàng dưới)
 const pairProducts = () => {
-  const topRow = products.slice(1, 10); // Hàng trên
+  const topRow = products.slice(21, 30); // Hàng trên
   const bottomRow = products.slice(11, 20); // Hàng dưới
   const maxLength = Math.max(topRow.length, bottomRow.length);
   const paired = [];

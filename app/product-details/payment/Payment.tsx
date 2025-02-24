@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, ScrollView, Image, StyleSheet } from 'rea
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import Footer from '~/app/Footer';
+
 export default function CheckoutScreen() {
   const [selectedTip, setSelectedTip] = useState<string | null>(null);
 
@@ -78,7 +80,12 @@ export default function CheckoutScreen() {
           <Icon name="shield" size={24} color="#fff" style={styles.shieldIcon} />
           <Text style={styles.placeOrderText}>Place Order Now</Text>
         </TouchableOpacity>
+
+       
       </ScrollView>
+      <View>
+        <Footer />
+      </View>
     </SafeAreaView>
   );
 }

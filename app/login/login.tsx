@@ -243,6 +243,9 @@
 //     opacity: 0.7,
 //   },
 // });
+
+
+
 import { router, Stack } from 'expo-router';
 import React, { useState, useCallback } from 'react';
 import {
@@ -330,8 +333,9 @@ export default function LoginScreen() {
 
         <View style={styles.rememberContainer}>
           <Text style={styles.rememberText}>Ghi nhớ tôi</Text>
-          <TouchableOpacity onPress={() => Alert.alert('Thông báo', 'Chức năng đang phát triển')}>
-            <Text style={styles.forgotPassword}>Quên mật khẩu?</Text>
+          <TouchableOpacity onPress={() => router.push('/login/forgot')}>
+            <Text style={styles.forgotPassword}>Quên mật khẩu?</Text> 
+      
           </TouchableOpacity>
         </View>
 
